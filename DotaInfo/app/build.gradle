@@ -37,4 +37,11 @@ dependencies {
     compile 'com.wdullaer:materialdatetimepicker:3.2.0'         // date & time picker
     compile 'com.mikhaellopez:circularimageview:3.0.2'          // circle image view
     compile 'com.hootsuite.android:nachos:1.1.1'                // material chips
+
+    // Room (use 1.1.0-beta1 for latest beta)
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+
+    //okHttpClient
+    compile 'com.squareup.okhttp3:okhttp:3.10.0'
 }

@@ -15,6 +15,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.pkapps.dotainfo.CacheDB.AllMatchesTable;
+import com.pkapps.dotainfo.CacheDB.AppDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,10 +48,7 @@ public class MainActivity extends Activity {
 //        List<People> items = DataGenerator.getPeopleData(this);
 //        items.addAll(DataGenerator.getPeopleData(this));
 //        items.addAll(DataGenerator.getPeopleData(this));
-        List<People> items = new ArrayList<People>();
-        for(int i =0;i<5;i++){
-            items.add(new People("PK",false));
-        }
+        List<AllMatchesTable> items = AppDatabase.getAppDatabase(this).getAllMatchesDao().getLimitedMatches(10);
 
         //set data and list adapter
         mAdapter = new MainList(this, items);
@@ -57,8 +57,8 @@ public class MainActivity extends Activity {
         // on item list clicked
         mAdapter.setOnItemClickListener(new MainList.OnItemClickListener() {
             @Override
-            public void onItemClick(View view, People obj, int position) {
-                Snackbar.make(parent_view, "Item " + obj.name + " clicked", Snackbar.LENGTH_SHORT).show();
+            public void onItemClick(View view, AllMatchesTable obj, int position) {
+                Snackbar.make(parent_view, "Item " + obj.getMatchID() + " clicked", Snackbar.LENGTH_SHORT).show();
             }
         });
 

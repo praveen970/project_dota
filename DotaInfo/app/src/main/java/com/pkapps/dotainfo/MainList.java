@@ -10,25 +10,27 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pkapps.dotainfo.CacheDB.AllMatchesTable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainList extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<People> items = new ArrayList<>();
+    private List<AllMatchesTable> items = new ArrayList<>();
 
     private Context ctx;
     private OnItemClickListener mOnItemClickListener;
 
     public interface OnItemClickListener {
-        void onItemClick(View view, People obj, int position);
+        void onItemClick(View view, AllMatchesTable obj, int position);
     }
 
     public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
         this.mOnItemClickListener = mItemClickListener;
     }
 
-    public MainList(Context context, List<People> items) {
+    public MainList(Context context, List<AllMatchesTable> items) {
         this.items = items;
         ctx = context;
     }
@@ -60,9 +62,9 @@ public class MainList extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if (holder instanceof OriginalViewHolder) {
             OriginalViewHolder view = (OriginalViewHolder) holder;
 
-            People p = items.get(position);
-            view.name.setText(p.name);
-            Tools.displayImageRound(ctx, view.image, p.image);
+            AllMatchesTable p = items.get(position);
+            view.name.setText(p.getMatchID());
+            view.image.setImageResource(p.getHeroID());
             view.lyt_parent.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
