@@ -1,12 +1,13 @@
 package com.pkapps.dotainfo.AsyncCalls;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import com.pkapps.dotainfo.Activities.MainActivity;
 import com.pkapps.dotainfo.JsonParsers.Parser;
-import com.pkapps.dotainfo.MainActivity;
-import com.pkapps.dotainfo.VanityLogin;
+import com.pkapps.dotainfo.Activities.VanityLogin;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,10 +25,10 @@ import okhttp3.Response;
 public class AllMatches extends AsyncTask<Void, Void, JSONArray> {
 
     String steam32;
-    VanityLogin ctx;
+    Context ctx;
     public AllMatches(Context ctx, String steam32) {
         this.steam32 = steam32;
-        this.ctx = (VanityLogin) ctx;
+        this.ctx = ctx;
     }
 
     @Override
@@ -48,8 +49,29 @@ public class AllMatches extends AsyncTask<Void, Void, JSONArray> {
 
     @Override
     protected void onPostExecute(JSONArray jsonArray) {
-        Parser.getAllMatches(ctx,jsonArray);
-        ctx.pd.dismiss();
-        ctx.startActivity(new Intent(ctx, MainActivity.class));
+
+        if(ctx.getClass().getSimpleName().equals("VanityLogin")){
+            Parser.getAllMatches(ctx,jsonArray);
+            VanityLogin a = (VanityLogin)ctx;
+            a.process1 = true;
+            boolean flag = true;
+            while(flag == true) {
+                if (a.process1 == true && a.process2 == true) {
+                    a.pd.dismiss();
+                    flag = false;
+                    ctx.startActivity(new Intent(a, MainActivity.class));
+                }
+            }
+
+        }
+        if(ctx.getClass().getSimpleName().equals("MainActivity")){
+            Parser.getRefreshedMatches(ctx,jsonArray);
+            MainActivity a = (MainActivity)ctx;
+            a.setMatchesAdapter();
+            a.refresher.setRefreshing(false);
+        }
+
+
+
     }
 }

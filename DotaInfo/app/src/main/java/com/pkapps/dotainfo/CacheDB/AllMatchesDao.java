@@ -27,6 +27,8 @@ public interface AllMatchesDao {
     @Query("delete from AllMatchesTable")
     void deleteAllMatches();
 
+    //Get Limited list of matches
+
     @Query("select * from AllMatchesTable order by matchID desc limit :limit")
     List<AllMatchesTable> getLimitedMatches(int limit);
 }

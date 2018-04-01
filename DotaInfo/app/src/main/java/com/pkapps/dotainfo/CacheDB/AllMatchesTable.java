@@ -12,11 +12,16 @@ import android.support.annotation.NonNull;
 public class AllMatchesTable {
     @NonNull
     @PrimaryKey String matchID;
-    String result;
+    boolean result;
     int duration;
     int gameMode;
     int lobbyType;
     int heroID;
+    int playerSlot;
+    int startTime;
+    int kills;
+    int deaths;
+    int assists;
 
     public String getMatchID() {
         return matchID;
@@ -26,11 +31,11 @@ public class AllMatchesTable {
         this.matchID = matchID;
     }
 
-    public String getResult() {
+    public boolean getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public void setResult(boolean result) {
         this.result = result;
     }
 
@@ -65,4 +70,45 @@ public class AllMatchesTable {
     public void setHeroID(int heroID) {
         this.heroID = heroID;
     }
+
+    public int getPlayerSlot() {
+        return playerSlot;
+    }
+
+    public void setPlayerSlot(int playerSlot) {
+        this.playerSlot = playerSlot;
+    }
+
+    public int getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(int startTime) {
+        this.startTime = startTime;
+    }
+
+    public int getKills() {
+        return kills;
+    }
+
+    public void setKills(int kills) {
+        this.kills = kills;
+    }
+
+    public int getDeaths() {
+        return deaths;
+    }
+
+    public void setDeaths(int deaths) {
+        this.deaths = deaths;
+    }
+
+    public int getAssists() {
+        return assists;
+    }
+
+    public void setAssists(int assists) {
+        this.assists = assists;
+    }
+
 }
