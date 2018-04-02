@@ -56,7 +56,7 @@ public class ProfileActivity extends Activity{
         kdr.setText(Float.toString(prefs.getFloat("kdr",10.0f)));
         winRate.setText(Integer.toString(prefs.getInt("winrate",99))+"%");
         personaname.setText(prefs.getString("personaname","Player"));
-        Bitmap bmp = Util.getBitmap((ProfileActivity)this);
+        Bitmap bmp = Util.loadImageFromStorage(ctx);
         if(bmp!=null) {
             imgVw.setImageBitmap(bmp);
         }

@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 
 import com.pkapps.dotainfo.Activities.VanityLogin;
 import com.pkapps.dotainfo.JsonParsers.Parser;
+import com.pkapps.dotainfo.Tools.SaveImage;
 import com.pkapps.dotainfo.Tools.Util;
 
 import org.json.JSONArray;
@@ -68,7 +69,10 @@ public class PlayerProfile extends AsyncTask<Void, Void, JSONObject> {
                         editor.putFloat("kdr",Util.getKDR(jb1.getInt("sum"),jb2.getInt("sum")));
                         editor.commit();
                         bitmap = BitmapFactory.decodeStream((InputStream)new URL(profileObject.getString("avatarfull")).getContent());
-                        Util.saveImage(ctx,bitmap);
+                        //SaveImage save = new SaveImage(ctx,bitmap);
+                        //save.saveBitmapToCard();
+                        //Util.saveImage(ctx,bitmap);
+                        Util.saveBitmapToInternalMemory(ctx,bitmap);
                     } catch (IOException e) {
 
                     }

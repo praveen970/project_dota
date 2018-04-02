@@ -172,7 +172,7 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
         SharedPreferences pref = getSharedPreferences("prefs",Context.MODE_PRIVATE);
         imgVw = (ImageView)header.findViewById(R.id.imageView);
         personaname = (TextView) header.findViewById(R.id.personaname);
-        Bitmap bmp = Util.getBitmap((MainActivity)ctx);
+        Bitmap bmp = Util.loadImageFromStorage(ctx);
         if(bmp!=null) {
             imgVw.setImageBitmap(bmp);
         }

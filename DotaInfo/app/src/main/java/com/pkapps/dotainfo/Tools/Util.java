@@ -3,6 +3,7 @@ package com.pkapps.dotainfo.Tools;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -21,7 +22,10 @@ import com.pkapps.dotainfo.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -80,34 +84,29 @@ public class Util {
         int result = 1;
         boolean flag = true;
         try {
-            if (ContextCompat.checkSelfPermission(ctx,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(act,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},result);
-            }
-
-            while(flag) {
-                if(result == PackageManager.PERMISSION_GRANTED) {
-                    flag = false;
-                    File path = Environment.getExternalStorageDirectory();
-                    filename = new File(path, "image.jpg");
-                    FileOutputStream out = new FileOutputStream(filename);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                    out.flush();
-                    out.close();
-                }
-                if(result == PackageManager.PERMISSION_DENIED){
-                    flag = false;
-                    File path = Environment.getExternalStorageDirectory();
-                    filename = new File(path, "image.jpg");
-                    FileOutputStream out = new FileOutputStream(filename);
-                    bitmap = BitmapFactory.decodeResource(ctx.getResources(),R.drawable.dota_logo);
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                    out.flush();
-                    out.close();
-                }
-            }
+                    if(ContextCompat.checkSelfPermission(ctx,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_GRANTED) {
+                        flag = false;
+                        File path = Environment.getExternalStorageDirectory();
+                        filename = new File(path, "image.jpg");
+                        FileOutputStream out = new FileOutputStream(filename);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                        out.flush();
+                        out.close();
+                    }
+                    if(ContextCompat.checkSelfPermission(ctx,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                            == PackageManager.PERMISSION_DENIED){
+                        flag = false;
+                        File path = Environment.getExternalStorageDirectory();
+                        filename = new File(path, "image.jpg");
+                        FileOutputStream out = new FileOutputStream(filename);
+                        bitmap = BitmapFactory.decodeResource(ctx.getResources(),R.drawable.dota_logo);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                        out.flush();
+                        out.close();
+                    }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -163,5 +162,42 @@ public class Util {
         }catch (Exception e) {
         }
         return "";
+    }
+    public static void saveBitmapToInternalMemory(Context ctx, Bitmap bitmap){
+        ContextWrapper cw = new ContextWrapper(ctx.getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        File directory = cw.getDir("ProfileDir", Context.MODE_PRIVATE);
+        // Create imageDir
+        File mypath=new File(directory,"profile.jpg");
+
+        FileOutputStream fos = null;
+        try {
+            fos = new FileOutputStream(mypath);
+            // Use the compress method on the BitMap object to write image to the OutputStream
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, fos);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    public static Bitmap loadImageFromStorage(Context ctx)
+    {
+        ContextWrapper cw = new ContextWrapper(ctx.getApplicationContext());
+        File path = cw.getDir("ProfileDir",Context.MODE_PRIVATE);
+        try {
+            File f=new File(path, "profile.jpg");
+            return BitmapFactory.decodeStream(new FileInputStream(f));
+
+        }
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+        return BitmapFactory.decodeResource(ctx.getResources(),R.drawable.dota_logo);
     }
 }
