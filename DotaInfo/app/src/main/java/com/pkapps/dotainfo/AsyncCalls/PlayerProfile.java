@@ -9,7 +9,6 @@ import android.os.AsyncTask;
 
 import com.pkapps.dotainfo.Activities.VanityLogin;
 import com.pkapps.dotainfo.JsonParsers.Parser;
-import com.pkapps.dotainfo.Tools.SaveImage;
 import com.pkapps.dotainfo.Tools.Util;
 
 import org.json.JSONArray;

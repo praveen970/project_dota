@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1976D2</color>
-    <color name="colorPrimaryDark">#1565C0</color>
-    <color name="colorPrimaryLight">#1E88E5</color>
+    <color name="colorPrimary">#445173</color>
+    <color name="colorPrimaryDark">#253050</color>
+    <color name="colorPrimaryLight">#445173</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorAccentDark">#F50057</color>
     <color name="colorAccentLight">#FF80AB</color>
@@ -312,6 +312,8 @@
     <color name="grey_800">#424242</color>
     <color name="grey_900">#212121</color>
     <color name="grey_1000">#1a1a1a</color>
+    <color name="pk_color">#1F4962</color>
+    <color name="black">#000</color>
 
 
     <!--for random color generator -->

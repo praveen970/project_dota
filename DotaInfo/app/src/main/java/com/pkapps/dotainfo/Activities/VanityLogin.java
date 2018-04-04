@@ -1,8 +1,11 @@
 package com.pkapps.dotainfo.Activities;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -20,8 +23,10 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.pkapps.dotainfo.AsyncCalls.AllMatches;
+import com.pkapps.dotainfo.AsyncCalls.HeroStats;
 import com.pkapps.dotainfo.AsyncCalls.PlayerProfile;
 import com.pkapps.dotainfo.AsyncCalls.SteamID;
+import com.pkapps.dotainfo.AsyncCalls.Totals;
 import com.pkapps.dotainfo.CacheDB.AppDatabase;
 import com.pkapps.dotainfo.R;
 
@@ -72,8 +77,7 @@ public class VanityLogin extends Activity {
                     pd.show();
                     editor.putString("steam32",id);
                     editor.commit();
-                    new PlayerProfile(ctx,id).execute();
-                    new AllMatches(ctx,id).execute();
+                    setCalls(ctx,id);
                 }catch(NumberFormatException e){
                     pd.setMessage("Progessing with Name");
                     pd.show();
@@ -90,34 +94,44 @@ public class VanityLogin extends Activity {
                 startActivity(new Intent(ctx,SteamWebLoginActivity.class));
             }
         });
-//        startMain = (Button) findViewById(R.id.button);
-//        startMain.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                pd.setMessage("Progessing");
-//                pd.show();
-//                //AppDatabase.getAppDatabase(ctx).getAllMatchesDao().deleteAllMatches();
-//                new PlayerProfile(ctx,id32).execute();
-//                new AllMatches(ctx,id32).execute();
-//            }
-//        });
+    }
+
+    public void displayDialog(){
+        steamSearch.setEnabled(true);
+        search.setEnabled(true);
+        new AlertDialog.Builder(this)
+                .setTitle("Wrong input")
+                .setMessage("Input ID or Name may be wrong OR account might be private")
+                .setCancelable(false)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                }).show();
     }
 
     @Override
     protected void onPostResume() {
         super.onPostResume();
-
+        search.setEnabled(true);
+        steamSearch.setEnabled(true);
         String id32 = pref.getString("steam32",null);
         if(id32!=null){
             if(loginFromSteam == true){
                 pd.setMessage("Progessing From Steam");
                 pd.show();
-                new PlayerProfile(ctx,id32).execute();
-                new AllMatches(this,id32).execute();
+                setCalls(ctx,id32);
             }else{
                 ctx.startActivity(new Intent(ctx, MainActivity.class));
             }
 
         }
+    }
+    public void setCalls(Context ctx,String id32){
+        new PlayerProfile(ctx,id32).execute();
+        new AllMatches(ctx,id32).execute();
+        new Totals(ctx,id32).execute();
+        new HeroStats(ctx,id32).execute();
     }
 }

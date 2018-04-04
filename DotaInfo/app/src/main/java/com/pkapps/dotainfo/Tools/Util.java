@@ -6,12 +6,14 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v13.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.format.DateFormat;
 import android.util.Base64;
 import android.widget.Toast;
 
@@ -30,6 +32,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 /**
@@ -55,77 +58,7 @@ public class Util {
         return Integer.toString(hours)+":"+minutesTime+":"+secondsTime;
 
     }
-    public static String BitMapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp= Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }
-    public static Bitmap StringToBitMap(String encodedString){
-        try {
-            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch(Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
-    public static void saveImage(Context ctx, Bitmap bitmap) {
-        File filename;
-        Activity act = (Activity) ctx;
-        if(ctx.getClass().getSimpleName().equals("VanityLogin")){
-            act = (VanityLogin)ctx;
-        }else if(ctx.getClass().getSimpleName().equals("MainActivity")){
-            act = (MainActivity)ctx;
-        }
 
-        int result = 1;
-        boolean flag = true;
-        try {
-                    if(ContextCompat.checkSelfPermission(ctx,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            == PackageManager.PERMISSION_GRANTED) {
-                        flag = false;
-                        File path = Environment.getExternalStorageDirectory();
-                        filename = new File(path, "image.jpg");
-                        FileOutputStream out = new FileOutputStream(filename);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                        out.flush();
-                        out.close();
-                    }
-                    if(ContextCompat.checkSelfPermission(ctx,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            == PackageManager.PERMISSION_DENIED){
-                        flag = false;
-                        File path = Environment.getExternalStorageDirectory();
-                        filename = new File(path, "image.jpg");
-                        FileOutputStream out = new FileOutputStream(filename);
-                        bitmap = BitmapFactory.decodeResource(ctx.getResources(),R.drawable.dota_logo);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-                        out.flush();
-                        out.close();
-                    }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-    }
-    public static Bitmap getBitmap(Activity ctx){
-        int result = 0;
-        if (ContextCompat.checkSelfPermission(ctx,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(ctx,
-                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},result);
-        }
-        String path = Environment.getExternalStorageDirectory().toString();
-        File f = new File(path + "/image.jpg");
-        Bitmap bmp = BitmapFactory.decodeFile(f.getAbsolutePath());
-        return bmp;
-    }
     public static int getWinRate(int win, int lose){
         try {
             return (int) Math.round(((double) win / (win + lose))*100);
@@ -154,11 +87,9 @@ public class Util {
     }
     public  static String getDateCurrentTimeZone(long timestamp) {
         try{
-            Calendar calendar = Calendar.getInstance();
-
-            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
-            //Date currenTimeZone = (Date) calendar.getTime();
-            return sdf.format(timestamp);
+            Calendar cal = Calendar.getInstance(Locale.ENGLISH);
+            cal.setTimeInMillis(timestamp * 1000L);
+            return DateFormat.format("dd-MM-yyyy HH:mm:ss", cal).toString();
         }catch (Exception e) {
         }
         return "";
@@ -199,5 +130,33 @@ public class Util {
             e.printStackTrace();
         }
         return BitmapFactory.decodeResource(ctx.getResources(),R.drawable.dota_logo);
+    }
+
+    public static int getMedal(Context ctx, int rank){
+        switch (rank/10){
+            case 1:
+                return ctx.getResources().obtainTypedArray(R.array.medals1).getResourceId(rank%10,0);
+
+            case 2:
+                return ctx.getResources().obtainTypedArray(R.array.medals2).getResourceId(rank%10,0);
+
+            case 3:
+                return ctx.getResources().obtainTypedArray(R.array.medals3).getResourceId(rank%10,0);
+
+            case 4:
+                return ctx.getResources().obtainTypedArray(R.array.medals4).getResourceId(rank%10,0);
+
+            case 5:
+                return ctx.getResources().obtainTypedArray(R.array.medals5).getResourceId(rank%10,0);
+
+            case 6:
+                return ctx.getResources().obtainTypedArray(R.array.medals6).getResourceId(rank%10,0);
+
+            case 7:
+                return ctx.getResources().obtainTypedArray(R.array.medals7).getResourceId(rank%10,0);
+
+            default:
+                return ctx.getResources().obtainTypedArray(R.array.medals0).getResourceId(0,0);
+        }
     }
 }

@@ -9,10 +9,12 @@ import android.content.Context;
  * Created by PraveenKumar on 3/27/2018.
  */
 
-@Database(entities = AllMatchesTable.class,version = 1)
+@Database(entities = {AllMatchesTable.class,TotalsTable.class,HeroStatsTable.class},version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
-    public  abstract AllMatchesDao getAllMatchesDao();
+    public abstract AllMatchesDao getAllMatchesDao();
+    public abstract TotalsDao getTotalsTableDao();
+    public abstract HeroStatsDao getHeroStatsDao();
     private static AppDatabase INSTANCE;
 
     public static AppDatabase getAppDatabase(Context context) {

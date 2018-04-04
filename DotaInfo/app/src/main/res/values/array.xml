@@ -122,4 +122,64 @@
         <item>@drawable/fairy</item>
         <item>@drawable/dota_logo</item>
     </integer-array>
+
+    <string-array name="medals1">
+        <item name="10">@drawable/seasonalrank1_0</item>
+        <item name="11">@drawable/seasonalrank1_1</item>
+        <item name="12">@drawable/seasonalrank1_2</item>
+        <item name="13">@drawable/seasonalrank1_3</item>
+        <item name="14">@drawable/seasonalrank1_4</item>
+        <item name="15">@drawable/seasonalrank1_5</item>
+    </string-array>
+    <string-array name="medals2">
+        <item name="20">@drawable/seasonalrank2_0</item>
+        <item name="21">@drawable/seasonalrank2_1</item>
+        <item name="22">@drawable/seasonalrank2_2</item>
+        <item name="23">@drawable/seasonalrank2_3</item>
+        <item name="24">@drawable/seasonalrank2_4</item>
+        <item name="25">@drawable/seasonalrank2_5</item>
+    </string-array>
+    <string-array name="medals3">
+        <item name="30">@drawable/seasonalrank3_0</item>
+        <item name="31">@drawable/seasonalrank3_1</item>
+        <item name="32">@drawable/seasonalrank3_2</item>
+        <item name="33">@drawable/seasonalrank3_3</item>
+        <item name="34">@drawable/seasonalrank3_4</item>
+        <item name="35">@drawable/seasonalrank3_5</item>
+    </string-array>
+    <string-array name="medals4">
+        <item name="40">@drawable/seasonalrank4_0</item>
+        <item name="41">@drawable/seasonalrank4_1</item>
+        <item name="42">@drawable/seasonalrank4_2</item>
+        <item name="43">@drawable/seasonalrank4_3</item>
+        <item name="44">@drawable/seasonalrank4_4</item>
+        <item name="45">@drawable/seasonalrank4_5</item>
+    </string-array>
+    <string-array name="medals5">
+        <item name="50">@drawable/seasonalrank5_0</item>
+        <item name="51">@drawable/seasonalrank5_1</item>
+        <item name="52">@drawable/seasonalrank5_2</item>
+        <item name="53">@drawable/seasonalrank5_3</item>
+        <item name="54">@drawable/seasonalrank5_4</item>
+        <item name="55">@drawable/seasonalrank5_5</item>
+    </string-array>
+    <string-array name="medals6">
+        <item name="60">@drawable/seasonalrank6_0</item>
+        <item name="61">@drawable/seasonalrank6_1</item>
+        <item name="62">@drawable/seasonalrank6_2</item>
+        <item name="63">@drawable/seasonalrank6_3</item>
+        <item name="64">@drawable/seasonalrank6_4</item>
+        <item name="65">@drawable/seasonalrank6_5</item>
+    </string-array>
+    <string-array name="medals7">
+        <item name="70">@drawable/seasonalrank7_0</item>
+        <item name="71">@drawable/seasonalrank7_1</item>
+        <item name="72">@drawable/seasonalrank7_2</item>
+        <item name="73">@drawable/seasonalrank7_3</item>
+        <item name="74">@drawable/seasonalrank7_4</item>
+        <item name="75">@drawable/seasonalrank7_5</item>
+    </string-array>
+    <string-array name="medals0">
+    <item name="0">@drawable/seasonalrank0_0</item>
+</string-array>
 </resources>

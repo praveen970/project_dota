@@ -31,4 +31,12 @@ public interface AllMatchesDao {
 
     @Query("select * from AllMatchesTable order by matchID desc limit :limit")
     List<AllMatchesTable> getLimitedMatches(int limit);
+
+    @Query("Select MAX(kills) from ( select * from AllMatchesTable order by matchID desc limit 20) limit 1")
+    int getMaxKill();
+    @Query("Select MAX(deaths) from ( select * from AllMatchesTable order by matchID desc limit 20) limit 1")
+    int getMaxDeath();
+    @Query("Select MAX(assists) from ( select * from AllMatchesTable order by matchID desc limit 20) limit 1")
+    int getMaxAssist();
+
 }

@@ -1,4 +1,4 @@
-package com.pkapps.dotainfo.Activities;
+package com.pkapps.dotainfo.Adapters;
 
 
 
@@ -51,22 +51,20 @@ public class MainList extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class OriginalViewHolder extends RecyclerView.ViewHolder {
         public ImageView image;
         public TextView name;
-        public TextView mode;
         public TextView result;
         public LinearLayout listTab;
         public View lyt_parent;
-        public TextView duration;
+        public TextView lobby;
         public ImageButton infoButton;
 
         public OriginalViewHolder(View v) {
             super(v);
             image = (ImageView) v.findViewById(R.id.image);
             name = (TextView) v.findViewById(R.id.name);
-            mode = (TextView) v.findViewById(R.id.mode);
             result = (TextView) v.findViewById(R.id.match_result);
             lyt_parent = (View) v.findViewById(R.id.lyt_parent);
             listTab = (LinearLayout) v.findViewById(R.id.result_colour);
-            duration = (TextView) v.findViewById(R.id.duration);
+            lobby = (TextView) v.findViewById(R.id.lobby);
             infoButton = (ImageButton) v.findViewById(R.id.infoButton);
         }
     }
@@ -86,7 +84,7 @@ public class MainList extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             OriginalViewHolder view = (OriginalViewHolder) holder;
 
             AllMatchesTable p = items.get(position);
-            view.duration.setText(Util.getDuration(p.getDuration()));
+            view.lobby.setText(DotaMisc.getLobby(p.getLobbyType()));
             view.name.setText(DotaMisc.getHeroName(p.getHeroID()));
             if((p.getPlayerSlot()<128 && p.getResult())||(p.getPlayerSlot()>127 && !p.getResult())){
                 view.result.setText("Won");
@@ -101,7 +99,7 @@ public class MainList extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     showAdditionalInfo(items.get(position));
                 }
             });
-            view.mode.setText(DotaMisc.getGameMode(p.getGameMode())+" "+DotaMisc.getLobby(p.getLobbyType()));
+
             view.image.setImageResource(ctx.getResources().obtainTypedArray(R.array.hero_images).getResourceId(p.getHeroID()-1,114));
             view.lyt_parent.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -131,9 +129,10 @@ public class MainList extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
         ((TextView) dialog.findViewById(R.id.personaname)).setText(DotaMisc.getHeroName(data.getHeroID()));
-        ((CircleImageView) dialog.findViewById(R.id.image)).setImageResource(ctx.getResources().obtainTypedArray(R.array.hero_images).getResourceId(data.getHeroID()-1,114));
+        ((ImageView) dialog.findViewById(R.id.image)).setImageResource(ctx.getResources().obtainTypedArray(R.array.hero_images).getResourceId(data.getHeroID()-1,114));
         ((TextView) dialog.findViewById(R.id.start_time)).setText(Util.getDateCurrentTimeZone(data.getStartTime()));
         ((TextView) dialog.findViewById(R.id.duration)).setText(Util.getDuration(data.getDuration()));
+        ((TextView) dialog.findViewById(R.id.mode)).setText(DotaMisc.getGameMode(data.getGameMode())+" "+DotaMisc.getLobby(data.getLobbyType()));
         ((TextView) dialog.findViewById(R.id.kda)).setText(""+data.getKills()+"/"+data.getDeaths()+"/"+data.getAssists());
         ((ImageButton) dialog.findViewById(R.id.bt_close)).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -51,17 +51,24 @@ public class AllMatches extends AsyncTask<Void, Void, JSONArray> {
     protected void onPostExecute(JSONArray jsonArray) {
 
         if(ctx.getClass().getSimpleName().equals("VanityLogin")){
-            Parser.getAllMatches(ctx,jsonArray);
-            VanityLogin a = (VanityLogin)ctx;
-            a.process1 = true;
-            boolean flag = true;
-            while(flag == true) {
-                if (a.process1 == true && a.process2 == true) {
-                    a.pd.dismiss();
-                    flag = false;
-                    ctx.startActivity(new Intent(a, MainActivity.class));
+            boolean recievedAllMatches = Parser.getAllMatches(ctx,jsonArray);
+            if(recievedAllMatches){
+                VanityLogin a = (VanityLogin)ctx;
+                a.process1 = true;
+                boolean flag = true;
+                while(flag == true) {
+                    if (a.process1 == true && a.process2 == true) {
+                        a.pd.dismiss();
+                        flag = false;
+                        ctx.startActivity(new Intent(a, MainActivity.class));
+                    }
                 }
+            }else{
+                VanityLogin a = (VanityLogin)ctx;
+                a.pd.dismiss();
+                a.displayDialog();
             }
+
 
         }
         if(ctx.getClass().getSimpleName().equals("MainActivity")){

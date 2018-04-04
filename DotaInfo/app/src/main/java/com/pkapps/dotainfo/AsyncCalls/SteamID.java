@@ -58,5 +58,7 @@ public class SteamID extends AsyncTask<Void,Void,Void> {
         super.onPostExecute(aVoid);
         new PlayerProfile(ctx,id32).execute();
         new AllMatches(ctx,id32).execute();
+        new Totals(ctx,id32).execute();
+        new HeroStats(ctx,id32).execute();
     }
 }
