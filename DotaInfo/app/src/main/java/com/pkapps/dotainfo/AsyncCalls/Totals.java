@@ -3,11 +3,10 @@ package com.pkapps.dotainfo.AsyncCalls;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.pkapps.dotainfo.JsonParsers.Parser;
+import com.pkapps.dotainfo.JsonParsers.UtilParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -41,13 +40,13 @@ public class Totals extends AsyncTask<Void,Void,JSONArray> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return null;
+        return new JSONArray();
     }
 
     @Override
     protected void onPostExecute(JSONArray o) {
         super.onPostExecute(o);
-        Parser.getTotalsToDB(ctx,o);
+        UtilParser.getTotalsToDB(ctx,o);
 
     }
 }

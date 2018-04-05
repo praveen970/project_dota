@@ -24,7 +24,7 @@ import java.net.URL;
  * Created by PraveenKumar on 3/27/2018.
  */
 
-public class Parser {
+public class UtilParser {
 
     public static boolean getAllMatches(Context ctx, JSONArray allMatchJsonArray){
         JSONObject matchObject;

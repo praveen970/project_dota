@@ -22,6 +22,9 @@ public interface AllMatchesDao {
     @Query("Select * from AllMatchesTable")
     List<AllMatchesTable> getAllMatches();
 
+    @Query("Select * from AllMatchesTable where matchID=:matchID")
+    AllMatchesTable getMatch(String matchID);
+
     //Delete all data from AllMatchesTable
 
     @Query("delete from AllMatchesTable")

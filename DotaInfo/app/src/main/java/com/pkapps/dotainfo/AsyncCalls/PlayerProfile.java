@@ -1,6 +1,5 @@
 package com.pkapps.dotainfo.AsyncCalls;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -8,7 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 
 import com.pkapps.dotainfo.Activities.VanityLogin;
-import com.pkapps.dotainfo.JsonParsers.Parser;
+import com.pkapps.dotainfo.JsonParsers.UtilParser;
 import com.pkapps.dotainfo.Tools.Util;
 
 import org.json.JSONArray;
@@ -94,7 +93,7 @@ public class PlayerProfile extends AsyncTask<Void, Void, JSONObject> {
 
     @Override
     protected void onPostExecute(JSONObject jsonObject) {
-        Parser.setProfile(ctx,jsonObject);
+        UtilParser.setProfile(ctx,jsonObject);
         if(ctx.getClass().getSimpleName().equals("VanityLogin")) {
             VanityLogin a = (VanityLogin) ctx;
             a.process2 = true;

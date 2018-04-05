@@ -1,39 +1,21 @@
 package com.pkapps.dotainfo.Tools;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Environment;
-import android.provider.MediaStore;
-import android.support.v13.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.format.DateFormat;
-import android.util.Base64;
-import android.widget.Toast;
 
-import com.pkapps.dotainfo.Activities.MainActivity;
-import com.pkapps.dotainfo.Activities.VanityLogin;
-import com.pkapps.dotainfo.DataTypes.Match;
 import com.pkapps.dotainfo.R;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Created by PraveenKumar on 3/29/2018.
@@ -55,7 +37,11 @@ public class Util {
         }else{
             minutesTime = Integer.toString(minutes);
         }
-        return Integer.toString(hours)+":"+minutesTime+":"+secondsTime;
+        if(hours>0) {
+            return Integer.toString(hours) + ":" + minutesTime + ":" + secondsTime;
+        }else{
+            return minutesTime + ":" + secondsTime;
+        }
 
     }
 

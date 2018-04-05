@@ -1,12 +1,11 @@
 package com.pkapps.dotainfo.AsyncCalls;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
 import com.pkapps.dotainfo.Activities.MainActivity;
-import com.pkapps.dotainfo.JsonParsers.Parser;
+import com.pkapps.dotainfo.JsonParsers.UtilParser;
 import com.pkapps.dotainfo.Activities.VanityLogin;
 
 import org.json.JSONArray;
@@ -51,7 +50,7 @@ public class AllMatches extends AsyncTask<Void, Void, JSONArray> {
     protected void onPostExecute(JSONArray jsonArray) {
 
         if(ctx.getClass().getSimpleName().equals("VanityLogin")){
-            boolean recievedAllMatches = Parser.getAllMatches(ctx,jsonArray);
+            boolean recievedAllMatches = UtilParser.getAllMatches(ctx,jsonArray);
             if(recievedAllMatches){
                 VanityLogin a = (VanityLogin)ctx;
                 a.process1 = true;
@@ -72,7 +71,7 @@ public class AllMatches extends AsyncTask<Void, Void, JSONArray> {
 
         }
         if(ctx.getClass().getSimpleName().equals("MainActivity")){
-            Parser.getRefreshedMatches(ctx,jsonArray);
+            UtilParser.getRefreshedMatches(ctx,jsonArray);
             MainActivity a = (MainActivity)ctx;
             a.setMatchesAdapter();
             a.refresher.setRefreshing(false);

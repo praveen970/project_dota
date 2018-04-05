@@ -28,10 +28,12 @@ import android.widget.Toast;
 import com.pkapps.dotainfo.Adapters.MainList;
 import com.pkapps.dotainfo.AsyncCalls.AllMatches;
 import com.pkapps.dotainfo.AsyncCalls.HeroStats;
+import com.pkapps.dotainfo.AsyncCalls.MatchDetails;
 import com.pkapps.dotainfo.AsyncCalls.PlayerProfile;
 import com.pkapps.dotainfo.AsyncCalls.Totals;
 import com.pkapps.dotainfo.CacheDB.AllMatchesTable;
 import com.pkapps.dotainfo.CacheDB.AppDatabase;
+import com.pkapps.dotainfo.CacheDB.OverviewTable;
 import com.pkapps.dotainfo.R;
 import com.pkapps.dotainfo.Tools.Util;
 
@@ -51,6 +53,8 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
     private Toolbar toolbar;
     List<AllMatchesTable> items;
     SharedPreferences pref;
+    SharedPreferences.Editor editor;
+    boolean isMatchClicked;
 
 
     @Override
@@ -60,9 +64,10 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
         parent_view = findViewById(android.R.id.content);
         ctx = this;
         pref = getSharedPreferences("prefs",Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = pref.edit();
+        editor = pref.edit();
         editor.putString("login","true");
         editor.commit();
+        isMatchClicked = false;
         setNavigationHeader();
         initToolbar();
         initComponent();
@@ -101,8 +106,20 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
         mAdapter.setOnItemClickListener(new MainList.OnItemClickListener() {
             @Override
             public void onItemClick(View view, AllMatchesTable obj, int position) {
-                Snackbar.make(parent_view, "Item " + obj.getMatchID() + " clicked", Snackbar.LENGTH_SHORT).show();
-
+                //Snackbar.make(parent_view, "Item " + obj.getMatchID() + " clicked", Snackbar.LENGTH_SHORT).show();
+                if(isMatchClicked!=true) {
+                    isMatchClicked = true;
+                    editor.putString("matchId", obj.getMatchID());
+                    editor.commit();
+                    OverviewTable matchData = AppDatabase.getAppDatabase(ctx).getOverviewDao().getMatchOverviewData(obj.getMatchID());
+                    if(matchData==null) {
+                        new MatchDetails(ctx, obj.getMatchID()).execute();
+                    }else{
+                        Intent intent = new Intent(ctx, MatchAnalysisActivity.class);
+                        intent.putExtra("matchId",obj.getMatchID());
+                        ctx.startActivity(intent);
+                    }
+                }
             }
         });
     }
@@ -151,6 +168,7 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
             AppDatabase.getAppDatabase(ctx).getAllMatchesDao().deleteAllMatches();
             AppDatabase.getAppDatabase(ctx).getTotalsTableDao().deleteTotals();
             AppDatabase.getAppDatabase(ctx).getHeroStatsDao().deleteStats();
+            AppDatabase.getAppDatabase(ctx).getOverviewDao().deleteOverviewTable();
             finish();
 
 
@@ -189,5 +207,11 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
         new AllMatches(this,id32).execute();
         new Totals(this,id32).execute();
         new HeroStats(this,id32).execute();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        isMatchClicked = false;
     }
 }

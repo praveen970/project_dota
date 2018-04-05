@@ -3,7 +3,7 @@ package com.pkapps.dotainfo.AsyncCalls;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.pkapps.dotainfo.JsonParsers.Parser;
+import com.pkapps.dotainfo.JsonParsers.UtilParser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +45,7 @@ public class HeroStats extends AsyncTask<Void,Void,JSONArray> {
     @Override
     protected void onPostExecute(JSONArray o) {
         super.onPostExecute(o);
-        Parser.getHeroStatsToDB(ctx,o);
+        UtilParser.getHeroStatsToDB(ctx,o);
 
     }
 }
