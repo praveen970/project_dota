@@ -23,7 +23,7 @@ public interface AllMatchesDao {
     List<AllMatchesTable> getAllMatches();
 
     @Query("Select * from AllMatchesTable where matchID=:matchID")
-    AllMatchesTable getMatch(String matchID);
+    AllMatchesTable getMatch(long matchID);
 
     //Delete all data from AllMatchesTable
 

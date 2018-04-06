@@ -24,10 +24,10 @@ import okhttp3.Response;
  */
 
 public class MatchDetails extends AsyncTask<Void, Void, JSONObject> {
-    String matchID;
+    long matchID;
     Context ctx;
 
-    public MatchDetails(Context ctx,String matchID) {
+    public MatchDetails(Context ctx,long matchID) {
         this.ctx = ctx;
         this.matchID = matchID;
     }

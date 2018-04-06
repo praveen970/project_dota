@@ -11,23 +11,23 @@ import android.support.annotation.NonNull;
 @Entity
 public class AllMatchesTable {
     @NonNull
-    @PrimaryKey String matchID;
+    @PrimaryKey long matchID;
     boolean result;
     int duration;
     int gameMode;
     int lobbyType;
     int heroID;
     int playerSlot;
-    int startTime;
+    long startTime;
     int kills;
     int deaths;
     int assists;
 
-    public String getMatchID() {
+    public long getMatchID() {
         return matchID;
     }
 
-    public void setMatchID(String matchID) {
+    public void setMatchID(long matchID) {
         this.matchID = matchID;
     }
 
@@ -79,11 +79,11 @@ public class AllMatchesTable {
         this.playerSlot = playerSlot;
     }
 
-    public int getStartTime() {
+    public long getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(int startTime) {
+    public void setStartTime(long startTime) {
         this.startTime = startTime;
     }
 

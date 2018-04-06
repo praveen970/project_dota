@@ -28,24 +28,24 @@ import java.util.List;
 public class MatchAnalysisActivity extends FragmentActivity {
 
     private ImageButton backButton;
-    private TextView matchNumber,radiantScore,direScore,gameMode,lobby,duration;
+    private TextView matchNumber,radiantScore,direScore,gameMode,lobby,duration,radiant,dire,startTime;
     private ViewPager view_pager;
     private TabLayout tab_layout;
-    String matchId;
+    Long matchId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_match_analysis);
         Intent i = getIntent();
         Bundle b = i.getExtras();
-        matchId = b.getString("matchId");
+        matchId = b.getLong("matchId");
         initComponent();
     }
 
     private void initComponent() {
         matchNumber = (TextView)findViewById(R.id.matchID);
         backButton = (ImageButton) findViewById(R.id.backButton);
-        matchNumber.setText(matchId);
+        matchNumber.setText(Long.toString(matchId));
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,11 +55,22 @@ public class MatchAnalysisActivity extends FragmentActivity {
         radiantScore = (TextView) findViewById(R.id.radiantScore);
         direScore = (TextView) findViewById(R.id.direScore);
         gameMode = (TextView) findViewById(R.id.gamemode);
+        radiant = (TextView)findViewById(R.id.radiant);
+        dire = (TextView)findViewById(R.id.dire);
+        startTime = (TextView) findViewById(R.id.start_time);
         lobby = (TextView) findViewById(R.id.lobby);
         duration = (TextView) findViewById(R.id.duration);
         OverviewTable data = AppDatabase.getAppDatabase(this).getOverviewDao().getMatchOverviewData(matchId);
-        radiantScore.setText(Integer.toString(data.getRadiant_score()));
-        direScore.setText(Integer.toString(data.getDire_score()));
+        if(data.isRadiantWin()){
+            radiant.setText("RADIANT VICTORY");
+            dire.setVisibility(View.INVISIBLE);
+        }else{
+            dire.setText("DIRE VICTORY");
+            radiant.setVisibility(View.INVISIBLE);
+        }
+        startTime.setText(Util.getDateCurrentTimeZone(data.getStartTime()));
+        radiantScore.setText(data.getRadiant_score());
+        direScore.setText(data.getDire_score());
         AllMatchesTable matchData = AppDatabase.getAppDatabase(this).getAllMatchesDao().getMatch(matchId);
         lobby.setText(DotaMisc.getLobby(matchData.getLobbyType()));
         gameMode.setText(DotaMisc.getGameMode(matchData.getGameMode()));
@@ -75,9 +86,9 @@ public class MatchAnalysisActivity extends FragmentActivity {
 
         adapter.addFragment(new OverviewFragment(), "OVERVIEW");
         adapter.addFragment(new OverviewFragment(), "PERFORMANCE");
-        adapter.addFragment(new OverviewFragment(), "TOP ALBUMS");
-        adapter.addFragment(new OverviewFragment(), "NEW RELEASES");
-        adapter.addFragment(new OverviewFragment(), "TOP SONGS");
+        adapter.addFragment(new OverviewFragment(), "ITEM BUILDS");
+        adapter.addFragment(new OverviewFragment(), "ABILITY BUILDS");
+        adapter.addFragment(new OverviewFragment(), "STATS");
         viewPager.setAdapter(adapter);
     }
     private class SectionsPagerAdapter extends FragmentPagerAdapter {

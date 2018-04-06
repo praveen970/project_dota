@@ -9,7 +9,7 @@ import android.support.annotation.NonNull;
  */
 @Entity
 public class HeroStatsTable {
-    @NonNull@PrimaryKey String matchID;
+    @NonNull@PrimaryKey long matchID;
     int heroID;
     int gamesPLayed;
     int won;
@@ -19,11 +19,11 @@ public class HeroStatsTable {
     int againstWon;
 
     @NonNull
-    public String getMatchID() {
+    public long getMatchID() {
         return matchID;
     }
 
-    public void setMatchID(@NonNull String matchID) {
+    public void setMatchID(@NonNull long matchID) {
         this.matchID = matchID;
     }
 

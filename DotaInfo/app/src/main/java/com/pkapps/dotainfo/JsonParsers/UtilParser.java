@@ -34,7 +34,7 @@ public class UtilParser {
                 try {
                     matchObject = allMatchJsonArray.getJSONObject(i);
                     matchData = new AllMatchesTable();
-                    matchData.setMatchID(matchObject.getString("match_id"));
+                    matchData.setMatchID(matchObject.getLong("match_id"));
                     matchData.setResult(matchObject.getBoolean("radiant_win"));
                     matchData.setDuration(matchObject.getInt("duration"));
                     matchData.setGameMode(matchObject.getInt("game_mode"));
@@ -115,14 +115,14 @@ public class UtilParser {
             try {
                 matchObject = allMatchJsonArray.getJSONObject(i);
                 matchData = new AllMatchesTable();
-                matchData.setMatchID(matchObject.getString("match_id"));
+                matchData.setMatchID(matchObject.getLong("match_id"));
                 matchData.setResult(matchObject.getBoolean("radiant_win"));
                 matchData.setDuration(matchObject.getInt("duration"));
                 matchData.setGameMode(matchObject.getInt("game_mode"));
                 matchData.setLobbyType(matchObject.getInt("lobby_type"));
                 matchData.setHeroID(matchObject.getInt("hero_id"));
                 matchData.setPlayerSlot(matchObject.getInt("player_slot"));
-                matchData.setStartTime(matchObject.getInt("start_time"));
+                matchData.setStartTime(matchObject.getLong("start_time"));
                 matchData.setKills(matchObject.getInt("kills"));
                 matchData.setDeaths(matchObject.getInt("deaths"));
                 matchData.setAssists(matchObject.getInt("assists"));
@@ -172,15 +172,15 @@ public class UtilParser {
     public static void getHeroStatsToDB(Context ctx, JSONArray jsonArray){
         if(jsonArray.length()!=0){
             HeroStatsTable heroStat;
-            String lastPlayed;
+            int lastPlayed;
             JSONObject statObject;
             for(int i =0;i<jsonArray.length();i++){
                 try {
                     statObject = jsonArray.getJSONObject(i);
                     heroStat = new HeroStatsTable();
                     heroStat.setHeroID(statObject.getInt("hero_id"));
-                    lastPlayed = statObject.getString("last_played");
-                    if(lastPlayed.equals("0")){
+                    lastPlayed = statObject.getInt("last_played");
+                    if(lastPlayed == 0){
                         break;
                     }
                     heroStat.setMatchID(lastPlayed);

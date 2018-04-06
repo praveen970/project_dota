@@ -20,7 +20,7 @@ public interface HeroStatsDao {
     List<HeroStatsTable> getStats();
 
     //Get LimitedData
-    @Query("select * from HeroStatsTable limit :limit")
+    @Query("select * from (select * from HeroStatsTable order by gamesPLayed desc) limit :limit")
     List<HeroStatsTable> getLimitedStats(int limit);
 
     //Delete

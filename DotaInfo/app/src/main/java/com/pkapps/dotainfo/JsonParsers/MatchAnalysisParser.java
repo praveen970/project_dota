@@ -28,10 +28,12 @@ public class MatchAnalysisParser {
         JSONObject statsJsonObj;
         playerData = new ArrayList<>();
         try {
-            String matchId = jsonObject.getString("match_id");
+            long matchId = jsonObject.getLong("match_id");
             overviewObj.setMatchID(matchId);
-            overviewObj.setRadiant_score(jsonObject.getInt("radiant_score"));
-            overviewObj.setDire_score(jsonObject.getInt("dire_score"));
+            overviewObj.setStartTime(jsonObject.getLong("start_time"));
+            overviewObj.setRadiantWin(jsonObject.getBoolean("radiant_win"));
+            overviewObj.setRadiant_score(jsonObject.getString("radiant_score"));
+            overviewObj.setDire_score(jsonObject.getString("dire_score"));
             playersJson = jsonObject.getJSONArray("players");
             for(int i=0;i<playersJson.length();i++){
                 statsJsonObj = playersJson.getJSONObject(i);

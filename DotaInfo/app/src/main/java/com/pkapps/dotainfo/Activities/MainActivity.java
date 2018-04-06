@@ -109,7 +109,7 @@ public class MainActivity extends Activity implements NavigationView.OnNavigatio
                 //Snackbar.make(parent_view, "Item " + obj.getMatchID() + " clicked", Snackbar.LENGTH_SHORT).show();
                 if(isMatchClicked!=true) {
                     isMatchClicked = true;
-                    editor.putString("matchId", obj.getMatchID());
+                    editor.putLong("matchId", obj.getMatchID());
                     editor.commit();
                     OverviewTable matchData = AppDatabase.getAppDatabase(ctx).getOverviewDao().getMatchOverviewData(obj.getMatchID());
                     if(matchData==null) {

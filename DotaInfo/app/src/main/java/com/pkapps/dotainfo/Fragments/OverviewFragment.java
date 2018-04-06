@@ -34,7 +34,7 @@ public class OverviewFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_overview, container, false);
         SharedPreferences pref = getActivity().getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        String matchId = pref.getString("matchId","");
+        long matchId = pref.getLong("matchId",0);
         OverviewTable data = AppDatabase.getAppDatabase(getContext()).getOverviewDao().getMatchOverviewData(matchId);
         //player1
         OverviewPlayer player0 = data.getData().get(0);

@@ -16,17 +16,19 @@ import java.util.List;
 @Entity
 public class OverviewTable {
 
-    @NonNull@PrimaryKey String matchID;
+    @NonNull@PrimaryKey long matchID;
     ArrayList<OverviewPlayer> data;
-    int radiant_score;
-    int dire_score;
+    String radiant_score;
+    String dire_score;
+    boolean isRadiantWin;
+    long startTime;
 
     @NonNull
-    public String getMatchID() {
+    public long getMatchID() {
         return matchID;
     }
 
-    public void setMatchID(@NonNull String matchID) {
+    public void setMatchID(@NonNull long matchID) {
         this.matchID = matchID;
     }
 
@@ -38,19 +40,35 @@ public class OverviewTable {
         this.data = data;
     }
 
-    public int getRadiant_score() {
+    public String getRadiant_score() {
         return radiant_score;
     }
 
-    public void setRadiant_score(int radiant_score) {
+    public void setRadiant_score(String radiant_score) {
         this.radiant_score = radiant_score;
     }
 
-    public int getDire_score() {
+    public String getDire_score() {
         return dire_score;
     }
 
-    public void setDire_score(int dire_score) {
+    public void setDire_score(String dire_score) {
         this.dire_score = dire_score;
+    }
+
+    public boolean isRadiantWin() {
+        return isRadiantWin;
+    }
+
+    public void setRadiantWin(boolean radiantWin) {
+        isRadiantWin = radiantWin;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
     }
 }

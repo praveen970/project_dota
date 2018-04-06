@@ -14,7 +14,7 @@ public interface OverviewDao {
 
     //Get matchdata based on matchID
     @Query("select * from OverviewTable where matchID=:matchID")
-    OverviewTable getMatchOverviewData(String matchID);
+    OverviewTable getMatchOverviewData(long matchID);
 
     //Delete all data
     @Query("delete from OverviewTable")
