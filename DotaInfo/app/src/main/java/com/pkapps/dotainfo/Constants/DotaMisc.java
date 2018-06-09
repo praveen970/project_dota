@@ -114,7 +114,7 @@ public class DotaMisc {
             case 105:return "Techies";
             case 106:return "Ember Spirit";
             case 107:return "Earth Spirit";
-            case 108:return "Abyssal Underlord";
+            case 108:return "Underlord";
             case 109:return "Terrorblade";
             case 110:return "Phoenix";
             case 111:return "Oracle";
@@ -126,7 +126,7 @@ public class DotaMisc {
             case 117:return "Dota Hero";
             case 118:return "Dota Hero";
             case 119:return "Dark Willow";
-            case 120:return "Dota Hero";
+            case 120:return "Pangolier";
             default: return "Dota hero";
         }
     }
